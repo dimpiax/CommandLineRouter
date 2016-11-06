@@ -30,6 +30,10 @@ public struct CommandLineRouter {
     
     private var _commands: [Commands] = []
     
+    public init() {
+        // empty initializer
+    }
+    
     public mutating func setCommands(name: String, commands: Command...) {
         _commands.append(Commands(name: name, value: commands))
     }
@@ -72,6 +76,9 @@ public struct CommandLineRouter {
         for (index, value) in path.enumerated() {
             commands = filterCommands(step: value, level: index, commandsSet: commands)
         }
+        
+        let pathLength = path.count
+        commands = commands.filter { $0.count == pathLength }
         
         guard let result = commands.first else {
             throw NSError(domain: "Not found any matches commands query", code: 0, userInfo: nil)

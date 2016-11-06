@@ -7,6 +7,11 @@
 //
 
 public struct Command {
-    let shortName: String
-    let name: String
+    public let shortName: String
+    public let name: String
+
+    public init(shortName: String, name: String) {
+	self.shortName = shortName
+	self.name = name
+    }
 }
