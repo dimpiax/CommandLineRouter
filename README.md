@@ -37,14 +37,15 @@ router.setCommands(name: "Export in folder", commands:
 
 // process routing
 do {
-    try router.route(CommandLine.arguments) { _, command, argument in
-        switch command.shortName {
-            case "-i":
+    try router.route(CommandLine.arguments) { flow in
+        switch flow.name {
+            case "Save file":
+                let input = flow[0].argument
+                let output = flow[1].argument
+
                 print("read file \(argument)")
-            
-            case "-o":
                 print("write file \(argument)")
-            
+
             default: break
         }
     }

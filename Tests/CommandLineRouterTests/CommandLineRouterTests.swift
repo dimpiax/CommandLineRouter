@@ -23,8 +23,8 @@ class CommandLineRouterTests: XCTestCase {
         )
         
         do {
-            try cml.route(["", "-i", "input_filename", "--output", "output_filename"]) { name, _, _ in
-                XCTAssertEqual(name, "Example I/O")
+            try cml.route(["", "-i", "input_filename", "--output", "output_filename"]) { flow in
+                XCTAssertEqual(flow.name, "Example I/O")
             }
         } catch let error {
             XCTFail(error.localizedDescription)
@@ -38,9 +38,10 @@ class CommandLineRouterTests: XCTestCase {
         )
         
         do {
-            try cml.route(["", "-h", "command"]) { _, command, argument in
+            try cml.route(["", "-h", "command"]) { flow in
+                let command = flow[0]
                 XCTAssertEqual(command.name, "--help")
-                XCTAssertEqual(argument, "command")
+                XCTAssertEqual(command.argument, "command")
             }
         } catch {
             XCTFail(error.localizedDescription)
@@ -62,7 +63,7 @@ class CommandLineRouterTests: XCTestCase {
         )
         
         do {
-            try cml.route(["", "-i", "input_filename", "--output", "output_filename", "-d", "destination_folder"]) { _, _, _ in }
+            try cml.route(["", "-i", "input_filename", "--output", "output_filename", "-d", "destination_folder"]) { _ in }
         } catch {
             XCTAssert(true)
         }
